@@ -74,7 +74,7 @@ The goal of this project is to simulate service continuity during server failure
     docker stop primary_hr_db
 
 Refresh the browser.
-The Recovery Server page should now be displayed automatically.
+The Recovery Server page should be displayed automatically.
 
 ## Simulating Failback
     docker start primary_hr_db
