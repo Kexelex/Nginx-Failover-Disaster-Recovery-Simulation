@@ -1,0 +1,33 @@
+services:
+  primary-server:
+    image: nginx:latest
+    container_name: primary_hr_db
+    volumes:
+      - ./primary:/usr/share/nginx/html
+    networks:
+      - dr_network
+
+  recovery-server:
+    image: nginx:latest
+    container_name: recovery_hr_db
+    volumes:
+      - ./recovery:/usr/share/nginx/html
+    networks:
+      - dr_network
+
+  load-balancer:
+    image: nginx:latest
+    container_name: nginx_load_balancer
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx-lb/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - primary-server
+      - recovery-server
+    networks:
+      - dr_network
+
+networks:
+  dr_network:
+    driver: bridge
